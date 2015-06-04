@@ -14,16 +14,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
 	static LineGraphView graph;
+	 static int steps = 0;
+     //Button btnReset;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        //btnReset = (Button)findViewById(R.id.btnReset);
+       
         
         if (savedInstanceState == null) {
         	
@@ -34,6 +42,14 @@ public class MainActivity extends Activity {
         		graph = new LineGraphView(getApplicationContext(), 100, Arrays.asList("x", "y", "z"));
         		graph.setVisibility(View.VISIBLE);
         }
+        
+        
+       /* btnReset.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			 ((AccelerometerSensorEventListener) a).setStep(0);
+			}
+		});*/
     }
 
     @Override
@@ -60,8 +76,7 @@ public class MainActivity extends Activity {
      */
     public static class PlaceholderFragment extends Fragment {
     	
-        public PlaceholderFragment(){
-        	
+        public PlaceholderFragment(){        	
         }
                 
         @Override
