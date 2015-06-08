@@ -14,23 +14,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
-	static LineGraphView graph;
-	 static int steps = 0;
-     //Button btnReset;
-	
+	 static LineGraphView graph;
+	 public static int steps = 0;
+	 
+     public void onClick(View v) { }
+     	public void btnClick(View V){
+     		steps = 0;
+     	}
+	 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        //btnReset = (Button)findViewById(R.id.btnReset);
+       
        
         
         if (savedInstanceState == null) {
@@ -44,12 +46,7 @@ public class MainActivity extends Activity {
         }
         
         
-       /* btnReset.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-			 ((AccelerometerSensorEventListener) a).setStep(0);
-			}
-		});*/
+       
     }
 
     @Override
@@ -87,17 +84,17 @@ public class MainActivity extends Activity {
             LinearLayout layout = (LinearLayout)rootView.findViewById(R.id.layout_Main);
             layout.setOrientation(LinearLayout.VERTICAL);
             TextView accelLabel = new TextView(rootView.getContext());
-            TextView steps = new TextView(rootView.getContext());
+            //TextView steps = new TextView(rootView.getContext());
             
             SensorManager sensorManager = (SensorManager) rootView.getContext().getSystemService(SENSOR_SERVICE);
          
         	Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         	SensorEventListener a = new AccelerometerSensorEventListener(accelLabel);
-        	sensorManager.registerListener(a, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+        	sensorManager.registerListener(a, accelerometer, SensorManager.SENSOR_DELAY_GAME);
         	
         	accelLabel.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         	layout.addView(accelLabel);
-        	layout.addView(steps);
+        	//layout.addView(steps);
         	layout.addView(graph,0);
         	
         	return rootView; 
