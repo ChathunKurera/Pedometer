@@ -6,22 +6,20 @@ import android.hardware.SensorEventListener;
 import android.widget.TextView;
 
 class AccelerometerSensorEventListener implements SensorEventListener {
-	float x,y,z;
+	float x,y,z,previous;
 	TextView output;
 	float[] maxAcc = new float[3];
 	float[] minAcc = new float[3];
 	float[] outputA = new float[3];
-	float previous;
-	int C = 5;
+	double C = 2.5;
 	int state = 0;
-	//int steps = 0;
 	String[] num;
 	String maxValues, minValues;
 	
 	public AccelerometerSensorEventListener(TextView outputText){
 		output = outputText;		
-		}
-	
+		}		
+
 		public void onAccuracyChanged(Sensor s, int i){}
 		
 		public void onSensorChanged(SensorEvent se){
@@ -30,7 +28,6 @@ class AccelerometerSensorEventListener implements SensorEventListener {
 				outputA[1] += (se.values[1] - outputA[1]) / C;
 				outputA[2] += (se.values[2] - outputA[2]) / C;
 			
-				
 			if (se.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION){
 				
 				x = se.values[0];
@@ -38,20 +35,20 @@ class AccelerometerSensorEventListener implements SensorEventListener {
 				z = se.values[2];
 				
 				//MAX values
-				if((outputA[0]) > maxAcc[0] ) {maxAcc[0] = (outputA[0]);}
-				if((outputA[1]) > maxAcc[1] ) {maxAcc[1] = (outputA[1]);}
-				if((outputA[2]) > maxAcc[2] ) {maxAcc[2] = (outputA[2]) ;}
+				for(int i = 0; i < 3; i++){
+					if((outputA[i]) > maxAcc[i] ) {maxAcc[i] = (outputA[i]);}
+				}
 				
 				//MIN values
-				if((outputA[0]) < minAcc[0] ) {minAcc[0] = (outputA[0]);}
-				if((outputA[1]) < minAcc[1] ) {minAcc[1] = (outputA[1]);}
-				if((outputA[2]) < minAcc[2] ) {minAcc[2] = (outputA[2]) ;}
+				for(int i = 0; i< 3; i++){
+					if((outputA[i]) < minAcc[i] ) {minAcc[i] = (outputA[i]);}
+				}
 				
 				num = new String[] {(String.format("%.3f", x)), (String.format("%.3f", y)), (String.format("%.3f", z))};
 				maxValues = String.format("(%.3f, %.3f, %.3f)", maxAcc[0], maxAcc[1], maxAcc[2]);
 				minValues = String.format("(%.3f, %.3f, %.3f)", minAcc[0], minAcc[1], minAcc[2]);
 												 			
-				MainActivity.graph.addPoint(outputA);
+				//MainActivity.graph.addPoint(outputA);
 			}
 			
 			if (state == 0 && outputA[2]>0){
@@ -60,7 +57,10 @@ class AccelerometerSensorEventListener implements SensorEventListener {
 			else if (state == 0){
 				state=0;
 			}
-			if (state ==1 && previous>outputA[2] && outputA[2] > 1){
+			if(state == 1 && outputA[2] > 4){
+				state = 0;
+			}
+			else if (state ==1 && previous>outputA[2] && outputA[2] > 0.7){
 				state=2; 
 			}
 			else if (state==2 && outputA[2]<0){
@@ -76,48 +76,17 @@ class AccelerometerSensorEventListener implements SensorEventListener {
 				state =0;
 				MainActivity.steps++; 
 			}
-			else if (state==4 && previous>outputA[2]){
-				state =0;
-				 
+			else if (state==4 && previous > outputA[2]){
+				state =0; 
 			}
-			
-			/*if( state == 0 && outputA[2] > 0) {
-				state = 1;
-			}
-			else if (state == 0){
-				state = 0;
-			}
-			else if(state == 1 && outputA[2] > 1.2){
-				state = 2;
-			}
-			else if( state == 2 && outputA[2] > previous ) { //rising n rising
-				state = 2;
-			}
-			else if(state == 2 && outputA[2] < previous){
-				state = 0 ;
-			}
-			else if( state == 3 && outputA[2] > previous && outputA[2] < 6){
-				state = 3;
-			}
-			else if( state == 3 && outputA[2] < previous && outputA[2] < 6){ //
-				state = 4;
-			}
-			else if( state == 3 && outputA[2] > 6){
-				state = 0;
-			}
-			else if( state == 4 && outputA[2] < 0 ){
-				steps += 1;
-			}
-			else{
-				state = 4;
-			}
-			*/
 			previous = outputA[2];
 			
-				output.setTextSize(17);
-				output.setText(" Max :" + maxValues + "\n" + " Min :" + minValues + "\nsteps: " + MainActivity.steps);
-				
-				
+				//output.setTextSize(30);
+				output.setText("C = " + C + "\n\nsteps: " + MainActivity.steps);
+		}
+		public void barChanged(double value)
+		{
+			this.C = value;
 		}
 	}
 
