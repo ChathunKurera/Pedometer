@@ -15,11 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
-	 static LineGraphView graph;
+	 //static LineGraphView graph;
 	 public static int steps = 0;
 	 
      public void onClick(View v) { }
@@ -32,21 +33,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-       
-       
-        
         if (savedInstanceState == null) {
         	
         		getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();  
         		
-        		graph = new LineGraphView(getApplicationContext(), 100, Arrays.asList("x", "y", "z"));
-        		graph.setVisibility(View.VISIBLE);
+        	//	graph = new LineGraphView(getApplicationContext(), 100, Arrays.asList("x", "y", "z"));
+        	//	graph.setVisibility(View.VISIBLE);
         }
-        
-        
-       
     }
 
     @Override
@@ -72,7 +67,8 @@ public class MainActivity extends Activity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
-    	
+    	private SeekBar valueC;
+    	SensorEventListener a;
         public PlaceholderFragment(){        	
         }
                 
@@ -84,20 +80,42 @@ public class MainActivity extends Activity {
             LinearLayout layout = (LinearLayout)rootView.findViewById(R.id.layout_Main);
             layout.setOrientation(LinearLayout.VERTICAL);
             TextView accelLabel = new TextView(rootView.getContext());
-            //TextView steps = new TextView(rootView.getContext());
             
             SensorManager sensorManager = (SensorManager) rootView.getContext().getSystemService(SENSOR_SERVICE);
          
         	Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        	SensorEventListener a = new AccelerometerSensorEventListener(accelLabel);
+            a = new AccelerometerSensorEventListener(accelLabel);
         	sensorManager.registerListener(a, accelerometer, SensorManager.SENSOR_DELAY_GAME);
-        	
         	accelLabel.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         	layout.addView(accelLabel);
-        	//layout.addView(steps);
-        	layout.addView(graph,0);
+        	//layout.addView(graph,0);
+        	
+        	valueC = (SeekBar) rootView.findViewById(R.id.seekBar1);
+            valueC.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    			
+    			@Override
+    			public void onStopTrackingTouch(SeekBar seekBar) {
+    				// TODO Auto-generated method stub
+    				
+    			}
+    			
+    			@Override
+    			public void onStartTrackingTouch(SeekBar seekBar) {
+    				// TODO Auto-generated method stub
+    				
+    			}
+    			
+    			@Override
+    			public void onProgressChanged(SeekBar seekBar, int progress,
+    					boolean fromUser) {
+    				 ((AccelerometerSensorEventListener) a).barChanged(progress+0.5);
+    				
+    			}
+    		});
         	
         	return rootView; 
         }
+        
+        
     }
 }

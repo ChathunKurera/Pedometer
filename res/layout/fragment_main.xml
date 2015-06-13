@@ -15,13 +15,20 @@
 	    android:paddingTop="@dimen/activity_vertical_margin"
 	    tools:context="ca.uwaterloo.Lab2_205_05.MainActivity$PlaceholderFragment" >
 
+		<SeekBar
+		    android:id="@+id/seekBar1"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:max="20"
+		     />
+
 		<Button
 		    android:id="@+id/btnReset"
-		    android:layout_width="wrap_content"
+		    android:layout_width="170dp"
 		    android:layout_height="wrap_content"
-		    android:text="@string/reset" 
-		    android:onClick="btnClick">
-		</Button>
+		    android:layout_gravity="center"
+		    android:onClick="btnClick"
+		    android:text="@string/reset" />
 
 	</LinearLayout>
 
