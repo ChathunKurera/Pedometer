@@ -1,7 +1,5 @@
 package ca.uwaterloo.Lab2_205_05;
 
-import java.util.Arrays;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.hardware.Sensor;
@@ -18,9 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-
 public class MainActivity extends Activity {
-	 //static LineGraphView graph;
+	// static LineGraphView graph;
 	 public static int steps = 0;
 	 
      public void onClick(View v) { }
@@ -39,8 +36,8 @@ public class MainActivity extends Activity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();  
         		
-        	//	graph = new LineGraphView(getApplicationContext(), 100, Arrays.asList("x", "y", "z"));
-        	//	graph.setVisibility(View.VISIBLE);
+       // 		graph = new LineGraphView(getApplicationContext(), 100, Arrays.asList("x", "y", "z"));
+       // 		graph.setVisibility(View.VISIBLE);
         }
     }
 
@@ -80,6 +77,7 @@ public class MainActivity extends Activity {
             LinearLayout layout = (LinearLayout)rootView.findViewById(R.id.layout_Main);
             layout.setOrientation(LinearLayout.VERTICAL);
             TextView accelLabel = new TextView(rootView.getContext());
+            TextView rotatLabel = new TextView(rootView.getContext());
             
             SensorManager sensorManager = (SensorManager) rootView.getContext().getSystemService(SENSOR_SERVICE);
          
@@ -88,7 +86,14 @@ public class MainActivity extends Activity {
         	sensorManager.registerListener(a, accelerometer, SensorManager.SENSOR_DELAY_GAME);
         	accelLabel.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         	layout.addView(accelLabel);
-        	//layout.addView(graph,0);
+        	
+        	Sensor rotation = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        	SensorEventListener r = new RotationalSensorEventListener(rotatLabel);
+        	sensorManager.registerListener(r, rotation, SensorManager.SENSOR_DELAY_NORMAL);
+        	layout.addView(rotatLabel);
+        	
+  //      	layout.addView(graph,0);
+        	
         	
         	valueC = (SeekBar) rootView.findViewById(R.id.seekBar1);
             valueC.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -108,7 +113,7 @@ public class MainActivity extends Activity {
     			@Override
     			public void onProgressChanged(SeekBar seekBar, int progress,
     					boolean fromUser) {
-    				 ((AccelerometerSensorEventListener) a).barChanged(progress+0.5);
+    				 ((AccelerometerSensorEventListener) a).barChanged(progress+ 1);
     				
     			}
     		});
