@@ -6,13 +6,9 @@ import android.hardware.SensorEventListener;
 import android.widget.TextView;
 
 class RotationalSensorEventListener implements SensorEventListener {
-	float x;
-	float y;
-	float z;
+	float x, y, z;
 	TextView output;
-	float maxRotx;
-	float maxRoty;
-	float maxRotz;
+	//float maxRotx, maxRoty, maxRotz;
 	
 	public RotationalSensorEventListener(TextView outputText){
 		output = outputText;
