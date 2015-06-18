@@ -66,7 +66,7 @@ class AccelerometerSensorEventListener implements SensorEventListener {
 				if(state == 1 && outputA[2] > 4){
 					state = 0;
 				}
-				else if (state ==1 && previous>outputA[2] && outputA[2] > 0.9){
+				else if (state ==1 && previous>outputA[2] && outputA[2] > 0.7){
 					state=2; 
 				}
 				else if (state==2 && outputA[2] < 0 ){
