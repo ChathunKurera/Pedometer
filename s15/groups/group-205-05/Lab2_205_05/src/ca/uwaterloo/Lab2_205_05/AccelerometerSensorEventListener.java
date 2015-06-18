@@ -13,7 +13,7 @@ class AccelerometerSensorEventListener implements SensorEventListener {
 	float[] maxAcc = new float[3];
 	float[] minAcc = new float[3];
 	float[] outputA = new float[3];
-	double C = 6.0;
+	double C = 3.0;
 	int state = 0;
 	String[] num;
 	String maxValues, minValues;
@@ -35,7 +35,7 @@ class AccelerometerSensorEventListener implements SensorEventListener {
 				x = se.values[0];
 				y = se.values[1];
 				z = se.values[2];
-				
+			/*	
 				//MAX values
 				for(int i = 0; i < 3; i++){
 					if((outputA[i]) > maxAcc[i] ) {maxAcc[i] = (outputA[i]);}
@@ -49,14 +49,14 @@ class AccelerometerSensorEventListener implements SensorEventListener {
 				num = new String[] {(String.format("%.3f", x)), (String.format("%.3f", y)), (String.format("%.3f", z))};
 				maxValues = String.format("(%.3f, %.3f, %.3f)", maxAcc[0], maxAcc[1], maxAcc[2]);
 				minValues = String.format("(%.3f, %.3f, %.3f)", minAcc[0], minAcc[1], minAcc[2]);
-												 			
+												 			*/
 			//	MainActivity.graph.addPoint(outputA);
 			}
 			
 
-			// lower-bound 0.6 & C = 6 and GAME  (steps are perfect) steps when not moving
+			// lower-bound 0.6 & C = 6 and GAME  (steps are perfect)
 			
-			if(rotVal1 > -0.2 && rotVal1 < 0.13 &&  rotVal0 < 0.15 ){
+			if(rotVal1 > -0.22 && rotVal1 < 0.14 &&  rotVal0 < 0.17 ){
 				if (state == 0 && outputA[2]>0){
 					state = 1; 
 				}
@@ -66,7 +66,7 @@ class AccelerometerSensorEventListener implements SensorEventListener {
 				if(state == 1 && outputA[2] > 4){
 					state = 0;
 				}
-				else if (state ==1 && previous>outputA[2] && outputA[2] > 0.6){
+				else if (state ==1 && previous>outputA[2] && outputA[2] > 0.9){
 					state=2; 
 				}
 				else if (state==2 && outputA[2] < 0 ){
