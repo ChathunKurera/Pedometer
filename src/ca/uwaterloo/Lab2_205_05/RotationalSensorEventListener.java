@@ -26,13 +26,13 @@ class RotationalSensorEventListener implements SensorEventListener {
 			    if(Math.abs(se.values[0]) > maxRotx ) {maxRotx = Math.abs(se.values[0]);}
 				if(Math.abs(se.values[1]) > maxRoty ) {maxRoty = Math.abs(se.values[1]);}
 				if(Math.abs(se.values[2]) > maxRotz ) {maxRotz = Math.abs(se.values[2]) ;}
-				
+				/*
 				String[] num = new String[] {(String.format("%.3f", x)), (String.format("%.3f", y)), (String.format("%.3f", z))};				
 				String maxValues = String.format("(%.3f, %.3f, %.3f)", maxRotx, maxRoty, maxRotz);
 				
 				output.setText("ROTATIONAL SENSOR \n        X: " + num[0] + "\n"
 						+ "        Y: " + num[1] + "\n        Z: " + num[2] +"\n"
-						+ " Max :" + maxValues + "\n" );   
+						+ " Max :" + maxValues + "\n");   */
 				}
 			AccelerometerSensorEventListener.rotVal0 = se.values[0];
 			AccelerometerSensorEventListener.rotVal1 = se.values[1];
