@@ -93,8 +93,6 @@ public class MainActivity extends Activity {
         	layout.addView(rotatLabel);
         	
   //      	layout.addView(graph,0);
-        	
-        	
         	valueC = (SeekBar) rootView.findViewById(R.id.seekBar1);
             valueC.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
     			
