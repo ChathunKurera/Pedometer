@@ -8,7 +8,7 @@ import android.widget.TextView;
 class RotationalSensorEventListener implements SensorEventListener {
 	float x, y, z;
 	TextView output;
-	//float maxRotx, maxRoty, maxRotz;
+	float maxRotx, maxRoty, maxRotz;
 	
 	public RotationalSensorEventListener(TextView outputText){
 		output = outputText;
@@ -22,7 +22,7 @@ class RotationalSensorEventListener implements SensorEventListener {
 				x = se.values[0];
 				y = se.values[1];
 				z = se.values[2];
-			/*	
+				
 			    if(Math.abs(se.values[0]) > maxRotx ) {maxRotx = Math.abs(se.values[0]);}
 				if(Math.abs(se.values[1]) > maxRoty ) {maxRoty = Math.abs(se.values[1]);}
 				if(Math.abs(se.values[2]) > maxRotz ) {maxRotz = Math.abs(se.values[2]) ;}
@@ -32,7 +32,7 @@ class RotationalSensorEventListener implements SensorEventListener {
 				
 				output.setText("ROTATIONAL SENSOR \n        X: " + num[0] + "\n"
 						+ "        Y: " + num[1] + "\n        Z: " + num[2] +"\n"
-						+ " Max :" + maxValues + "\n" );   */
+						+ " Max :" + maxValues + "\n" );   
 				}
 			AccelerometerSensorEventListener.rotVal0 = se.values[0];
 			AccelerometerSensorEventListener.rotVal1 = se.values[1];
